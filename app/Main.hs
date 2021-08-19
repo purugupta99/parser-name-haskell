@@ -18,6 +18,32 @@ data Name = Name {
     , lName :: Text
 } deriving (Show)
 
+data NameBlock = NameBlock {
+    nameB :: Text
+  , restName :: NameBlock
+} | Empty deriving (Show)
+
+sKing = NameBlock {
+    nameB = "Simon"
+    , restName = NameBlock {
+        nameB = "King"
+        , restName = Empty
+    }
+}
+
+parseNameBlock :: Parser NameBlock
+parseNameBlock = do
+    x <- parseString <* spaceConsumer
+    if null x
+        then pure Empty
+        else do
+            y <- parseNameBlock
+            pure $ NameBlock {
+                    nameB = pack x
+                    , restName = y
+                }
+
+
 tmpParsed = Name {
       fName = "Simon"
     , mName = Nothing
@@ -57,4 +83,6 @@ main :: IO ()
 main = do
     let
         out = fmap (parseTest parseName) inp
+        out2 = fmap (parseTest parseNameBlock) inp
     sequence_ out
+    sequence_ out2
