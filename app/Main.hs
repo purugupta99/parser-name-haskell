@@ -23,7 +23,6 @@ import Text.Megaparsec.Char.Lexer as L
   an optional middle name, and finally a last name
 -}
 
-
 inp = ["Simon King", "Simon King-Kong", "Simon-Sequeira Vinson King-Lord"]
 
 newtype NameUnit = NameUnit Text
@@ -52,20 +51,6 @@ data Name = Name {
     , lName :: NameB
 } deriving (Show)
 
-me = Name {
-    fName = NameB [NameUnit "Paritosh", NameUnit "Kong"],
-    mName = NameB [],
-    lName = NameB [NameUnit "Raj"]
-}
-
-sKing = NameBlock {
-    nameB = NameB [NameUnit "Paritosh", NameUnit "Kong"]
-    , restName = NameBlock {
-        nameB = NameB [NameUnit "Raj"]
-        , restName = Empty
-    }
-}
-
 parseNameBlock :: Parser NameBlock
 parseNameBlock = do
     x <- parseNameB <* spaceConsumer
@@ -77,9 +62,6 @@ parseNameBlock = do
                     nameB = x
                     , restName = y
                 }
-
-
-
 
 type Parser a = Parsec Void Text a
 
