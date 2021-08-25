@@ -4,11 +4,8 @@ module Main where
 
 import Data.Text (Text, pack, unpack)
 import Data.Void
-import Control.Applicative hiding (many, some)
-import Control.Monad.IO.Class
 import Text.Megaparsec
 import Text.Megaparsec.Char as M
-import Text.Megaparsec.Char.Lexer as L
 
 {-
 > an uppercase (resp. lowercase) letter is a character in the 26-character 
